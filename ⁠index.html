@@ -5,30 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oyuncu Sesli Sohbet</title>
     <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; margin-top: 50px; }
-        .kutu { background: #1e1e1e; padding: 20px; border-radius: 10px; width: 80%; max-width: 350px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        input { width: 90%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; }
-        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; }
-        button:hover { background: #0056b3; }
+        /* Genel Arka Plan: Koyu Siyah */
+        body { 
+            background-color: #0d0d0d; 
+            color: white; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            margin: 0;
+            padding-top: 50px;
+        }
+
+        /* Başlığın arkasındaki geçişli ve parlayan kutu */
+        .baslik-kutusu {
+            background: linear-gradient(45deg, rgba(0, 123, 255, 0.1), rgba(255, 152, 0, 0.1));
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.4), 0 0 20px rgba(255, 152, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mavi-Turuncu Geçişli Başlık Yazısı */
+        h2.gecisli-yazi {
+            margin: 0;
+            font-size: 36px;
+            background: linear-gradient(to right, #007bff, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Ana Kutu (Siyah/Koyu Gri) */
+        .kutu { 
+            background: #1a1a1a; 
+            padding: 30px 20px; 
+            border-radius: 15px; 
+            width: 85%; 
+            max-width: 350px; 
+            margin: 0 auto; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            border-top: 3px solid #ff9800; /* Üstte turuncu detay */
+            border-bottom: 3px solid #007bff; /* Altta mavi detay */
+        }
+
+        /* Yazı Yazma Kutuları */
+        input { 
+            width: 85%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 1px solid #333; 
+            border-radius: 8px; 
+            background: #0d0d0d;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Buton Tasarımları */
+        button { 
+            width: 93%; 
+            padding: 12px; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-top: 12px; 
+            font-weight: bold; 
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        
+        .btn-kayit { background-color: #007bff; } /* Mavi Kayıt Butonu */
+        .btn-kayit:hover { background-color: #0056b3; box-shadow: 0 0 15px rgba(0, 123, 255, 0.6); }
+        
+        .btn-giris { background-color: #ff9800; } /* Turuncu Giriş Butonu */
+        .btn-giris:hover { background-color: #e68a00; box-shadow: 0 0 15px rgba(255, 152, 0, 0.6); }
+
+        .btn-cikis { background-color: #dc3545; }
+
         #sohbet-ekrani { display: none; } 
     </style>
 </head>
 <body>
 
-    <div id="giris-ekrani" class="kutu">
-        <h2>Giriş / Kayıt</h2>
-        <input type="text" id="kullanici-adi" placeholder="Kullanıcı Adı (Örn: Huseyin12)">
-        <input type="password" id="sifre" placeholder="Şifre">
-        <button onclick="kayitOl()">Kayıt Ol</button>
-        <button onclick="girisYap()" style="background: #28a745;">Giriş Yap</button>
-        <p id="mesaj" style="color: yellow; font-size: 14px;"></p>
+    <!-- Havalı Geçişli Başlık -->
+    <div class="baslik-kutusu">
+        <h2 class="gecisli-yazi">Oyuncu Chat</h2>
     </div>
 
+    <!-- GİRİŞ VE KAYIT EKRANI -->
+    <div id="giris-ekrani" class="kutu">
+        <input type="text" id="kullanici-adi" placeholder="Kullanıcı Adı (Örn: Huseyin12)">
+        <input type="password" id="sifre" placeholder="Şifre">
+        
+        <button class="btn-kayit" onclick="kayitOl()">Kayıt Ol</button>
+        <button class="btn-giris" onclick="girisYap()">Giriş Yap</button>
+        
+        <p id="mesaj" style="color: #ff9800; font-size: 14px; margin-top: 15px; font-weight: bold;"></p>
+    </div>
+
+    <!-- SOHBET VE XP EKRANI -->
     <div id="sohbet-ekrani" class="kutu">
-        <h2 id="hosgeldin-yazisi"></h2>
-        <h3 style="color: #ff9800;">Seviye: <span id="seviye-gosterge">1</span> | XP: <span id="xp-gosterge">0</span></h3>
-        <p style="color: #aaa; font-size: 12px;">(Ses ve veritabanı laptopa geçince eklenecek)</p>
-        <button onclick="cikisYap()" style="background: #dc3545;">Çıkış Yap</button>
+        <h2 id="hosgeldin-yazisi" style="color: #007bff;"></h2>
+        <h3 style="color: white;">Seviye: <span id="seviye-gosterge" style="color: #ff9800; font-size: 24px;">1</span> | XP: <span id="xp-gosterge" style="color: #007bff; font-size: 24px;">0</span></h3>
+        
+        <p style="color: #777; font-size: 12px; margin-top: 20px;">(Ses ve veritabanı laptopa geçince eklenecek)</p>
+        
+        <button class="btn-cikis" onclick="cikisYap()">Çıkış Yap</button>
     </div>
 
     <script src="app.js"></script>
