@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyuncu Sesli Sohbet</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; margin-top: 50px; }
+        .kutu { background: #1e1e1e; padding: 20px; border-radius: 10px; width: 80%; max-width: 350px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; }
+        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        #sohbet-ekrani { display: none; } 
+    </style>
+</head>
+<body>
+
+    <div id="giris-ekrani" class="kutu">
+        <h2>Giriş / Kayıt</h2>
+        <input type="text" id="kullanici-adi" placeholder="Kullanıcı Adı (Örn: Huseyin12)">
+        <input type="password" id="sifre" placeholder="Şifre">
+        <button onclick="kayitOl()">Kayıt Ol</button>
+        <button onclick="girisYap()" style="background: #28a745;">Giriş Yap</button>
+        <p id="mesaj" style="color: yellow; font-size: 14px;"></p>
+    </div>
+
+    <div id="sohbet-ekrani" class="kutu">
+        <h2 id="hosgeldin-yazisi"></h2>
+        <h3 style="color: #ff9800;">Seviye: <span id="seviye-gosterge">1</span> | XP: <span id="xp-gosterge">0</span></h3>
+        <p style="color: #aaa; font-size: 12px;">(Ses ve veritabanı laptopa geçince eklenecek)</p>
+        <button onclick="cikisYap()" style="background: #dc3545;">Çıkış Yap</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
